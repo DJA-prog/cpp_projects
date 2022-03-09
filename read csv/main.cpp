@@ -6,10 +6,10 @@ using namespace std;
 
 string * split(string line, char splitter) 
 {
-    static string field_columns[5];
+    static string field_columns[6];
     int line_length = line.length();
     int NL_pointer = 0;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 6; i++)
     {
         NL_pointer = line.find(splitter, 0);
         field_columns[i] = line.substr(0, NL_pointer);
@@ -24,14 +24,14 @@ int main(void)
     string find_phrase = "Student23";
     cin >> find_phrase;
 
-    cout << "0-Computer Name" << endl << "1-username" << endl << "2-IP" << endl << "3-password" << endl << "4-updated" << endl << "5-all" << endl;
+    cout << "0-Computer Name ; 1-username ; 2-IP ; 3-password ; 4-updated ; 5-active ; 6-all" << endl;
 
-    cout << "Return (0 - 5): ";
+    cout << "Return (0 - 6): ";
     int csv_column = 4;
     cin >> csv_column;
 
     fstream csv_file;
-    csv_file.open("list.csv", ios_base::in | ios_base::out);
+    csv_file.open("../csv/list.csv", ios_base::in | ios_base::out);
 
     unsigned char ch;
     string csv_content;
@@ -64,9 +64,9 @@ int main(void)
             // cout << line << endl;
             // cout << line.substr(line.find_last_of(0x2C) + 1, line.length() - line.find_last_of(0x2C)) << endl;
             split_return = split(line, 0x2C);
-            if(csv_column == 5)
+            if(csv_column == 6)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     cout << split_return[i] << (char)0x09;
                 }

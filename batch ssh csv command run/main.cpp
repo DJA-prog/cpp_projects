@@ -50,7 +50,7 @@ int main(void)
         NL_pointer = csv_content.find(0x0A, 0);
         csv_seperated = csv_seperate(csv_content.substr(0, NL_pointer));
         
-        ssh_command = "sshpass -p '" + csv_seperated[3] + "' ssh " + csv_seperated[1] + "@" + csv_seperated[2] + " 'sudo apt update -y && sudo  apt upgrade -y'";
+        ssh_command = "sshpass -p '" + csv_seperated[3] + "' ssh " + csv_seperated[1] + "@" + csv_seperated[2] + " 'sudo apt install typespeed -y & exit'";
         cout << ssh_command << endl;
         ssh_return = system(ssh_command.c_str());
         cout << ssh_return;
