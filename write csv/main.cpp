@@ -73,14 +73,17 @@ int main(void)
             while (true)
             {
                 C_2 = line.find(0x2C, C_1 + 1);
-                if (C_2 == string::npos) //end loop if end of string
-                    break;
                 
                 if (C_1 == 0)
                 {
                     column_length = C_2 - C_1;
                     column_start = C_1;
                     column = line.substr(column_start, C_2 - C_1);
+                }else if (C_2 ==  string::npos)
+                {
+                    column_length = line_length - C_1 - 1;
+                    column_start = C_1 + 1;
+                    column = line.substr(column_start, line_length - C_1 - 1);
                 }else
                 {
                     column_length = C_2 - C_1 - 1;
@@ -93,6 +96,8 @@ int main(void)
                     csv_content.replace(column_start + line_start, column_length, new_value);
                     break;
                 }
+                if (C_2 == string::npos) //end loop if end of string
+                    break;
                 C_1 = C_2;
                 column_count++;
             }
