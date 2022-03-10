@@ -94,7 +94,7 @@ int main(void)
                 {
                     cout << "start at: " << column_start + line_start << "\t column length: " << column_length << "\t column: " << column << endl;
                     csv_content.replace(column_start + line_start, column_length, new_value);
-                    break;
+                    // break;
                 }
                 if (C_2 == string::npos) //end loop if end of string
                     break;
