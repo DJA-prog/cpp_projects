@@ -1,14 +1,24 @@
+/* time example */
 #include <iostream>
-#include <time.h>
+#include <stdio.h>      /* printf */
+#include <time.h>       /* time_t, struct tm, difftime, time, mktime */
 
 using namespace std;
 
-int main(void)
+int main ()
 {
-    time_t local_time;
-    struct tm * timeinfo;
+  time_t timer;
+  struct tm y2k = {0};
+  double seconds;
 
-    time (&local_time);
-    timeinfo = localtime (&local_time);
-    cout << time(timeinfo) << endl;
+  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+
+  time(&timer);  /* get current time; same as: timer = time(NULL)  */
+
+  seconds = difftime(timer,mktime(&y2k));
+
+  printf ("%.f seconds since January 1, 2000 in the current timezone", seconds);
+
+  return 0;
 }

@@ -1,0 +1,9 @@
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt autoremove
+sudo reboot
+export DISPLAY=:0; remmina & exit;
+sudo apt install remmina
+sudo apt install typespeed
+export DISPLAY=:0 xset s reset
+kill $(sudo ps -e | grep remmina | awk '{print $1}')
