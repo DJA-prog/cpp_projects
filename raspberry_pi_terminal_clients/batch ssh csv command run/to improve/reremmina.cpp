@@ -27,6 +27,15 @@ int main(void)
     fstream csv_file;
     string csv_path = "../csv/list.csv";
     csv_file.open(csv_path, ios_base::in);
+    if (csv_file)
+    {
+        cout << "Retrieved CSV content" << endl;
+    }else
+    {
+        cout << "Failed to open CSV file" << endl;
+        return 1;
+    }
+    
     unsigned char ch;
     string csv_content;
     if(!csv_file)

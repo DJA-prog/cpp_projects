@@ -7,10 +7,10 @@ using namespace std;
 
 string * split(string line, char splitter) 
 {
-    static string field_columns[6];
+    static string field_columns[9];
     int line_length = line.length();
     int NL_pointer = 0;
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 9; i++)
     {
         NL_pointer = line.find(splitter, 0);
         field_columns[i] = line.substr(0, NL_pointer);
@@ -22,14 +22,21 @@ string * split(string line, char splitter)
 int main(void)
 {
     string command = "kill $(sudo ps -e | grep remmina | awk '{print $1}')";
-
+    int check_column = 5;
     fstream csv_file;
     string csv_path = "../csv/list.csv";
     csv_file.open(csv_path, ios_base::in);
     unsigned char ch;
     string csv_content;
-    if(!csv_file)
+    
+    if (csv_file)
+    {
+        cout << "Retrieved CSV content" << endl;
+    }else
+    {
+        cout << "Failed to open CSV file" << endl;
         return 1;
+    }
 
     while (true)
     {   
@@ -54,9 +61,9 @@ int main(void)
         if(line.find(0x0A, 0) != string::npos)
             line.erase(line.find(0x0A, 0),1);
         split_return = split(line, 0x2C);
-        cout << split_return[0] << split_return[5] << endl;
-        if (split_return[5] == "T")
+        if (split_return[check_column] == "T")
         {
+            cout << (char)0x0A << "######" << split_return[0] << " " << split_return[check_column] << endl;
             string ssh_command = "sshpass -p '" + split_return[3] + "' ssh -o StrictHostKeyChecking=no " + split_return[1] + "@" + split_return[2] + " '" + command + "'";
             cout << ssh_command << endl;
             system(ssh_command.c_str());
