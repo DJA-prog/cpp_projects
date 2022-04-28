@@ -7,8 +7,8 @@ using namespace std;
 
 int main(void)
 {
-	string file_path = "./.rasp";
-	string ip_file_path = "./.ip";
+	string file_path = "./rasp";
+	string ip_file_path = "./ip";
 	string file_content_line;
 	string remove_phrase = "Nmap scan report for raspberrypi.whs.local ";
 	string ip;
