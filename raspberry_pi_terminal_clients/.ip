@@ -1,1 +1,0 @@
-    inet 192.168.178.59/24 brd 192.168.178.255 scope global dynamic noprefixroute wlp7s0

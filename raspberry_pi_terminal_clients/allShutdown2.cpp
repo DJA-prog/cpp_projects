@@ -13,31 +13,31 @@ string remove_phrase = "Nmap scan report for raspberrypi.whs.local ";
 string ip;
 string my_ip;
 string ip_range = "192.168.144";
-string host_name = "pi";
 string username = "pi";
 string password = "12345";
 string nmap_command;
 fstream newfile, idFile;
 
-int idChangedCheck(string command_return_file_path, string _ip)
+int idChangedCheck(string command_return_file_path)
 {
 	cout << "Checking for \"WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!\"\n";
-	ifstream read(command_return_file_path);
-
-	if(!read) return 0;
-
-	bool isEmpty = read.peek() == EOF;
-	if (isEmpty)
-	{
-		string command = "ssh-keygen -f \"/home/" + host_name + "/.ssh/known_hosts\" -R \"" + _ip + "\"";
-		system(command.c_str());
-		cout << "	EMPTY" << endl;
-		return 2;
-	}else
-	{
-		cout << "	PASS" << endl;
-	}
-	
+	idFile.open(command_return_file_path, ios::in);
+	if (idFile.is_open()){ 
+      	while(getline(idFile, _file_content_line)){
+			cout << "##	" + _file_content_line << endl;
+			if(_file_content_line.find("ssh-keygen") != std::string::npos)
+			{
+				cout << _file_content_line << endl;
+				// system(file_content_line.c_str());
+				cout << "	FAILED" << endl;
+				return 2;
+			}
+      	}
+      	idFile.close(); //close the file object.
+   	}else{
+   		cout << "could not open " << command_return_file_path << endl;
+   	}
+	cout << "	PASS" << endl;
 	return 0;
 }
 
@@ -107,10 +107,10 @@ int main(void)
       		if (ip != my_ip)
       		{
       			cout << line_count << ": " << ip << endl; //print the data of the string
-      			string ssh_command = "sshpass -p '" + password + "' ssh -o StrictHostKeyChecking=no " + username + "@" + ip + " 'sudo shutdown now' > '" + command_return_file_path +"'";
+      			string ssh_command = "sshpass -p '" + password + "' ssh -o StrictHostKeyChecking=no " + username + "@" + ip + " 'ls' > '" + command_return_file_path +"'";
 	            cout << ssh_command << endl;
 	            system(ssh_command.c_str());
-				int checkpass = idChangedCheck(command_return_file_path, ip);
+				int checkpass = idChangedCheck(command_return_file_path);
 				if(checkpass == 2)
 				{
 					system(ssh_command.c_str());

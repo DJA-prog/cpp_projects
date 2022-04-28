@@ -5,60 +5,27 @@
 
 using namespace std;
 
-string command_return_file_path = "./returnFile";
-string file_path = "./rasp";
-string ip_file_path = "./ip";
-string file_content_line, _file_content_line;
-string remove_phrase = "Nmap scan report for raspberrypi.whs.local ";
-string ip;
-string my_ip;
-string ip_range = "192.168.144";
-string host_name = "pi";
-string username = "pi";
-string password = "12345";
-string nmap_command;
-fstream newfile, idFile;
-
-int idChangedCheck(string command_return_file_path, string _ip)
-{
-	cout << "Checking for \"WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!\"\n";
-	ifstream read(command_return_file_path);
-
-	if(!read) return 0;
-
-	bool isEmpty = read.peek() == EOF;
-	if (isEmpty)
-	{
-		string command = "ssh-keygen -f \"/home/" + host_name + "/.ssh/known_hosts\" -R \"" + _ip + "\"";
-		system(command.c_str());
-		cout << "	EMPTY" << endl;
-		return 2;
-	}else
-	{
-		cout << "	PASS" << endl;
-	}
-	
-	return 0;
-}
-
-
 int main(void)
 {
+	string file_path = "./rasp";
+	string ip_file_path = "./ip";
+	string file_content_line;
+	string remove_phrase = "Nmap scan report for raspberrypi.whs.local ";
+	string ip;
+	string my_ip;
+	string ip_range = "192.168.144";
+	string nmap_command;
+	fstream newfile;
 
 	cout << "Removing old files..." << endl;
 	if (remove(file_path.c_str()) != 0)
 	{
-		// cout << "error deleting / could not find " << file_path << endl;
+		cout << "error deleting / could not find " << file_path << endl;
 	}
 
 	if (remove(ip_file_path.c_str()) != 0)
 	{
-		// cout << "error deleting / could not find " << ip_file_path << endl;
-	}
-
-	if (remove(command_return_file_path.c_str()) != 0)
-	{
-		// cout << "error deleting / could not find " << command_return_file_path << endl;
+		cout << "error deleting / could not find " << ip_file_path << endl;
 	}
 	cout << "	Done" << endl;
 
@@ -107,14 +74,9 @@ int main(void)
       		if (ip != my_ip)
       		{
       			cout << line_count << ": " << ip << endl; //print the data of the string
-      			string ssh_command = "sshpass -p '" + password + "' ssh -o StrictHostKeyChecking=no " + username + "@" + ip + " 'sudo shutdown now' > '" + command_return_file_path +"'";
+      			string ssh_command = "sshpass -p '12345' ssh -o StrictHostKeyChecking=no pi@" + ip + " 'sudo shutdown now'";
 	            cout << ssh_command << endl;
 	            system(ssh_command.c_str());
-				int checkpass = idChangedCheck(command_return_file_path, ip);
-				if(checkpass == 2)
-				{
-					system(ssh_command.c_str());
-				}
         		line_count++;
       		}
         	
