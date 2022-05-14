@@ -4,7 +4,9 @@
         "iosfwd": "cpp",
         "*.tcc": "cpp",
         "fstream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "cmath": "cpp",
+        "string": "cpp"
     },
     "git.ignoreLimitWarning": true
 }
