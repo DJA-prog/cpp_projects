@@ -1,7 +1,6 @@
-#include <iostream>
 #include <string>
 
-using namespace std;
+using string::string;
 
 string pathinfo(string url, int file_info) // 0:filepath ; 1:filename ; 2:basename ; 3: fileextention
 {
@@ -30,16 +29,4 @@ string pathinfo(string url, int file_info) // 0:filepath ; 1:filename ; 2:basena
         return baseName;
     }
     return fileExtention;
-}
-
-int main(int argc, char const *argv[])
-{
-    string url = "https://www.youtube.com/index.php?w=302df3ffhf4&s=123";
-    
-    cout << pathinfo(url, 0) << endl;
-    cout << pathinfo(url, 1) << endl;
-    cout << pathinfo(url, 2) << endl;
-    cout << pathinfo(url, 3) << endl;
-    
-    return 0;
 }
