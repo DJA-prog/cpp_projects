@@ -1,3 +1,5 @@
+// replace %20 in file names with ' ' (space)
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -24,7 +26,7 @@ int main(int argc, char const *argv[])
       	}
       	index_file.close(); //close the file object.
    	}else{
-   		cout << "could not open index.html" << endl;
+   		cout << "could not open /tmp/ls.txt" << endl;
    	}
     return 0;
 }

@@ -1,3 +1,5 @@
+##Please note that I code and compile in Linux (Debian 11)
+
 # cpp_projects
 
 #raspberry_pi_terminal_clients

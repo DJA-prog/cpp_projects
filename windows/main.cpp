@@ -19,6 +19,7 @@ class CSVReader{
             if (!csv_file)
             {
                 cout << "Failed to open record" << endl;
+                exit; // EXIT CODE
             }
             while (!csv_file.eof())
             {
